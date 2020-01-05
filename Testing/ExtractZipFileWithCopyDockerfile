@@ -1,0 +1,11 @@
+# The base image (Windows OS)
+FROM mydockercity/servercorewithdrives:1903
+
+# Copy apps from sources to root directory
+COPY sources /
+
+# Extracts the zip to a folder then delete the zip
+RUN Expand-Archive -Path MyApp.zip -DestinationPath C:\\; \
+	Remove-Item -Path MyApp.zip
+
+LABEL maintainer="vndevpro@gmail.com"

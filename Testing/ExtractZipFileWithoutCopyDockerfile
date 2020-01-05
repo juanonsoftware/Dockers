@@ -1,0 +1,12 @@
+# The base image (Windows OS)
+FROM mydockercity/servercorewithdrives:1903 AS TmpWindows 
+# Copy apps from sources to root directory
+COPY sources /
+# Extracts the zip to a folder
+RUN Expand-Archive -Path MyApp.zip -DestinationPath C:\\;
+
+# Main part of the new image
+FROM mydockercity/servercorewithdrives:1903
+COPY --from=TmpWindows C:/MyApp/ C:\\;
+
+LABEL maintainer="vndevpro@gmail.com"
