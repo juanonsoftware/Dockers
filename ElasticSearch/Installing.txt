@@ -1,0 +1,14 @@
+Installing ElasticSearch
+
+1. Download ElasticSearch
+(Full set of features => https://www.elastic.co/downloads/elasticsearch)
+(OSS under Apache 2.0 license => https://www.elastic.co/downloads/elasticsearch-oss)
+
+The package includes java JDK already
+
+2. Extract the package and create an variable
+Eg. Package is extracted to "RealPath"
+=> run: setx /m ELASTICSEARCH_HOME "RealPath"
+
+3. Run the .bat file
+call %ELASTICSEARCH_HOME%\bin\elasticsearch.bat

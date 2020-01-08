@@ -1,3 +1,3 @@
-What is this image?
+What is this docker file?
 
-Create a docker image based on Windows Server Core with two additional drives L:\ (logs) and D:\ (data)
+Create a docker image based on Windows Server Core and add two additional drives for general purpose L:\ (logs) and D:\ (data)
