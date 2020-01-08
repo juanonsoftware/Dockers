@@ -1,0 +1,19 @@
+# The base image (Windows OS)
+FROM mydockercity/servercorewithdrives:1903
+
+# Copy ElasticSearch from a ready image
+COPY --from=mydockercity/elasticsearchservercore:751-v1 C:/elasticsearch-7.5.1/ C:/elasticsearch-7.5.1/
+
+# ELASTICSEARCH_HOME is used by RunElasticSearch.cmd file to launch ElasticSearch.
+ENV ELASTICSEARCH_HOME C:/elasticsearch-7.5.1
+
+# Copy files
+COPY config\\elasticsearch.yml ${ELASTICSEARCH_HOME}/config/
+COPY sources\\RunElasticSearch.cmd C:/
+
+# Call file to start ELASTICSEARCH
+CMD ["C:/RunElasticSearch.cmd"]
+
+EXPOSE 9200 9300
+
+LABEL maintainer="vndevpro@gmail.com"
