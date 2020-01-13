@@ -1,5 +1,5 @@
 # Build an intermediate image then use it to reduce layers for our real image
-FROM mydockercity/servercorewithdrives:1903 AS tmpimg
+FROM mydockercity/servercorewithdrives:1903-v2 AS tmpimg
 # Copy apps from sources to root directory
 COPY sources /
 # Build variable to allow passing in a specific version of ElasticSearch
@@ -11,22 +11,27 @@ RUN Expand-Archive -Path $Env:ELASTICSEARCH_ZIP -DestinationPath C:\\; \
 	Remove-Item -Path $Env:ELASTICSEARCH_ZIP
 
 # The base image (Windows OS)
-FROM mydockercity/servercorewithdrives:1903
+FROM mydockercity/servercorewithdrives:1903-v2
 
 # Build variable to allow passing in a specific version of ElasticSearch
 ARG ELASTICSEARCH_VERSION=7.5.1
 ARG ELASTICSEARCH_SOURCE=elasticsearch-${ELASTICSEARCH_VERSION}
 ARG ELASTICSEARCH_ZIP=elasticsearch-${ELASTICSEARCH_VERSION}-windows-x86_64.zip
 
-# Copy ElasticSearch from tmpimg
-COPY --from=tmpimg C:/${ELASTICSEARCH_SOURCE}/ C:\\${ELASTICSEARCH_SOURCE}
-COPY --from=tmpimg C:/RunElasticSearch.cmd/ C:/
-
 # ELASTICSEARCH_HOME is used by RunElasticSearch.cmd file to launch ElasticSearch.
 ENV ELASTICSEARCH_HOME C:\\${ELASTICSEARCH_SOURCE}
 
+# Copy ElasticSearch from tmpimg
+COPY --from=tmpimg C:/${ELASTICSEARCH_SOURCE}/ /${ELASTICSEARCH_HOME}
+
+# Copy RunElasticSearch.cmd
+COPY custom/RunElasticSearch.cmd /
+
 # Copy config files
-COPY config\\elasticsearch.yml ${ELASTICSEARCH_HOME}/config/
+COPY custom/app/ ${ELASTICSEARCH_HOME}/
+
+# Define Custom volume then copy files for new containers
+VOLUME c:/Custom
 
 # Call file to start ELASTICSEARCH
 CMD ["C:/RunElasticSearch.cmd"]
