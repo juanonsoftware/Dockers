@@ -8,8 +8,7 @@ VOLUME c:/Logs
 # create two drives L:\ => C:\Logs and D:\ => C:\Data
 SHELL ["powershell.exe", "-Command"]
 
-RUN Set-ItemProperty -path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\DOS Devices' -Name 'L:' -Value '\??\C:\Logs' -Type String;
-
-RUN Set-ItemProperty -path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\DOS Devices' -Name 'D:' -Value '\??\C:\Data' -Type String;
+RUN Set-ItemProperty -path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\DOS Devices' -Name 'L:' -Value '\??\C:\Logs' -Type String; \
+	Set-ItemProperty -path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\DOS Devices' -Name 'D:' -Value '\??\C:\Data' -Type String;
 
 LABEL maintainer="vndevpro@gmail.com"
