@@ -7,7 +7,7 @@ ARG ELASTICSEARCH_VERSION=7.5.1
 ARG ELASTICSEARCH_SOURCE=elasticsearch-${ELASTICSEARCH_VERSION}
 ARG ELASTICSEARCH_ZIP=elasticsearch-${ELASTICSEARCH_VERSION}-windows-x86_64.zip
 # Extracts the zip to a folder then delete the zip
-RUN Expand-Archive -Path $Env:ELASTICSEARCH_ZIP -DestinationPath C:\\; \
+RUN Expand-Archive -Path $Env:ELASTICSEARCH_ZIP -DestinationPath C:\; \
 	Remove-Item -Path $Env:ELASTICSEARCH_ZIP
 
 # The base image (Windows OS)
@@ -15,20 +15,18 @@ FROM mydockercity/servercorewithdrives:1903-v3
 
 # Build variable to allow passing in a specific version of ElasticSearch
 ARG ELASTICSEARCH_VERSION=7.5.1
-ARG ELASTICSEARCH_SOURCE=elasticsearch-${ELASTICSEARCH_VERSION}
-ARG ELASTICSEARCH_ZIP=elasticsearch-${ELASTICSEARCH_VERSION}-windows-x86_64.zip
 
 # ELASTICSEARCH_HOME is used by RunElasticSearch.cmd file to launch ElasticSearch.
-ENV ELASTICSEARCH_HOME C:\\${ELASTICSEARCH_SOURCE}
+ENV ELASTICSEARCH_HOME C:\\elasticsearch-${ELASTICSEARCH_VERSION}
 
 # Copy ElasticSearch from tmpimg
-COPY --from=tmpimg C:/${ELASTICSEARCH_SOURCE}/ /${ELASTICSEARCH_HOME}
+COPY --from=tmpimg ${ELASTICSEARCH_HOME} ${ELASTICSEARCH_HOME}
 
 # Copy RunElasticSearch.cmd
 COPY custom/RunElasticSearch.cmd /
 
 # Copy config files
-COPY custom/app/ ${ELASTICSEARCH_HOME}/
+COPY custom/app/ ${ELASTICSEARCH_HOME}
 
 # Define Custom volume then copy files for new containers
 VOLUME c:/Custom
