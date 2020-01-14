@@ -1,0 +1,16 @@
+Install Kibana
+
+1. Installing document on elastic => https://www.elastic.co/guide/en/kibana/current/install.html
+(On Windows => https://www.elastic.co/guide/en/kibana/current/windows.html)
+
+2. Download the package
+(https://artifacts.elastic.co/downloads/kibana/kibana-7.5.1-windows-x86_64.zip)
+
+(only features under Apache 2.0 license https://artifacts.elastic.co/downloads/kibana/kibana-oss-7.5.1-windows-x86_64.zip)
+
+3. Unzip it and create a variable KIBANA_HOME
+
+4. Run from command line
+cd %KIBANA_HOME%
+.\bin\kibana.bat
+

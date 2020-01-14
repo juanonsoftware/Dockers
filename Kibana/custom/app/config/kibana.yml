@@ -1,0 +1,4 @@
+server.port: 5601
+server.host: "0.0.0.0"
+server.name: "docker-kibana"
+elasticsearch.hosts: ["http://localhost:9200", "http://elasticsearch:9200"]
