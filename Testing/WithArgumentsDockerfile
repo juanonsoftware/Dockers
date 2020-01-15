@@ -1,0 +1,6 @@
+ARG TEST_VAR1=10
+
+# The base image (Windows OS)
+FROM mydockercity/servercorewithdrives:1903
+RUN echo 123
+RUN echo $ENV:TEST_VAR1
