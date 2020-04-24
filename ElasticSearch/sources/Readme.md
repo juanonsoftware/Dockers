@@ -1,0 +1,1 @@
+You should download and put the ES release into this folder, eg: elasticsearch-7.6.0-windows-x86_64.zip
