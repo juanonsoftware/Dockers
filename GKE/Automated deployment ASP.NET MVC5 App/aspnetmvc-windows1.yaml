@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aspnetmvc
+  labels:
+    app: aspnetmvc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aspnetmvc
+  template:
+    metadata:
+      labels:
+        app: aspnetmvc
+    spec:
+      nodeSelector:
+        kubernetes.io/os: windows
+      containers:
+      - name: aspnetmvc
+        image: gcr.io/thermal-hour-280110/aspnetmvcminimal:v1
+        ports:
+        - containerPort: 80
